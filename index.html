@@ -1,39 +1,201 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <title>Twoja Hospitalizacja</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f7fa;
-            text-align: center;
-            padding: 80px;
-        }
-        h1 {
-            color: #00a651;
-            font-size: 42px;
-        }
-        p {
-            font-size: 20px;
-        }
-        .btn {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 15px 30px;
-            background: #00a651;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-        }
-    </style>
-</head>
-<body>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Twoja Hospitalizacja — Trening agentów</title>
 
-<h1>Twoja Hospitalizacja</h1>
-<p>Strona działa 🚀</p>
-<a class="btn" href="#">Dowiedz się więcej</a>
+  <!-- Minimalistyczny reset -->
+  <style>
+    :root{
+      /* Paleta w stylu PRU (granat + złoto) */
+      --bg: #0b1530;
+      --bg-2: #0f2046;
+      --card: rgba(255,255,255,.06);
+      --card-2: rgba(255,255,255,.085);
+      --text: #e9eefc;
+      --muted: rgba(233,238,252,.72);
+      --line: rgba(233,238,252,.14);
+      --accent: #f2c300;     /* złoto/żółty */
+      --accent-2:#ffd84d;
+      --danger:#ff5a6a;
+      --ok:#34d399;
 
-</body>
-</html>
+      --radius: 18px;
+      --shadow: 0 18px 60px rgba(0,0,0,.35);
+      --shadow-2: 0 10px 30px rgba(0,0,0,.25);
+
+      --max: 1120px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(242,195,0,.22), transparent 55%),
+        radial-gradient(900px 600px at 85% 10%, rgba(255,216,77,.12), transparent 55%),
+        radial-gradient(800px 600px at 50% 100%, rgba(79,140,255,.16), transparent 55%),
+        linear-gradient(180deg, var(--bg), #070d1f 70%);
+      min-height:100vh;
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    button, input{ font-family: inherit; }
+
+    .container{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 26px 18px 60px;
+    }
+
+    /* Header */
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 16px;
+      padding: 18px 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow-2);
+      position: sticky;
+      top: 14px;
+      backdrop-filter: blur(10px);
+      z-index: 20;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      min-width: 240px;
+    }
+    .logo{
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 30% 30%, var(--accent-2), var(--accent));
+      box-shadow: 0 12px 24px rgba(242,195,0,.28);
+    }
+    .brand h1{
+      margin:0;
+      font-size: 15px;
+      letter-spacing: .2px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .brand .sub{
+      display:block;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    /* Tabs */
+    .tabs{
+      display:flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+    }
+    .tab{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 13px;
+      transition: .15s ease;
+      user-select:none;
+    }
+    .tab:hover{ transform: translateY(-1px); background: rgba(255,255,255,.06); }
+    .tab.active{
+      border-color: rgba(242,195,0,.6);
+      background: rgba(242,195,0,.14);
+      box-shadow: 0 12px 30px rgba(242,195,0,.12);
+    }
+    .tag{
+      margin-left: 8px;
+      font-size: 11px;
+      color: rgba(11,21,48,.95);
+      background: var(--accent);
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-weight: 900;
+      letter-spacing: .2px;
+    }
+
+    /* Content */
+    .hero{
+      margin-top: 22px;
+      padding: 22px 22px 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+    }
+    .hero h2{
+      margin: 0 0 10px;
+      font-size: 22px;
+      letter-spacing: .2px;
+    }
+    .hero p{
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-weight: 600;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+    @media (min-width: 980px){
+      .grid.two{ grid-template-columns: 1fr 1fr; }
+    }
+
+    .card{
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow-2);
+    }
+    .card h3{
+      margin: 0 0 8px;
+      font-size: 16px;
+      letter-spacing: .2px;
+    }
+    .card .desc{
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-weight: 600;
+      line-height: 1.45;
+      font-size: 13px;
+    }
+
+    .hint{
+      display:flex;
+      align-items:flex-start;
+      gap: 10px;
+      border: 1px solid rgba(242,195,0,.35);
+      background: rgba(242,195,0,.10);
+      border-radius: 14px;
+      padding: 12px 12px;
+      color: rgba(255,255,255,.92);
+      margin-top: 12px;
+    }
+    .hint b{ color: var(--accent-2); }
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background: var(--accent);
+      margin-top: 5px;
+      box-shadow:

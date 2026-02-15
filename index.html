@@ -18,13 +18,13 @@
 
 body{
   margin:0;
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: var(--light);
-  color: var(--text);
+  font-family:"Segoe UI",Arial,sans-serif;
+  background:var(--light);
+  color:var(--text);
 }
 
 header{
-  background: linear-gradient(90deg,var(--primary),var(--primary-dark));
+  background:linear-gradient(90deg,var(--primary),var(--primary-dark));
   color:white;
   padding:40px 20px;
   position:relative;
@@ -33,24 +33,13 @@ header{
 header:before{
   content:"";
   position:absolute;
-  left:0;
-  top:0;
-  bottom:0;
-  width:14px;
+  left:0; top:0; bottom:0;
+  width:12px;
   background:var(--accent);
 }
 
-header h1{
-  margin:0;
-  font-size:48px;
-  letter-spacing:1px;
-}
-
-header p{
-  margin:10px 0 0;
-  font-size:20px;
-  opacity:.9;
-}
+header h1{margin:0;font-size:42px;}
+header p{margin:10px 0 0;font-size:18px;opacity:.9;}
 
 nav{
   display:flex;
@@ -78,18 +67,16 @@ nav button.active{
 .section{
   display:none;
   padding:40px 20px;
-  max-width:1200px;
+  max-width:1100px;
   margin:auto;
 }
 
-.section.active{
-  display:block;
-}
+.section.active{display:block;}
 
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:30px;
+  gap:25px;
 }
 
 .card{
@@ -97,6 +84,12 @@ nav button.active{
   border-radius:var(--radius);
   padding:25px;
   box-shadow:0 10px 30px rgba(0,0,0,.08);
+  cursor:pointer;
+  transition:.2s;
+}
+
+.card:hover{
+  transform:translateY(-4px);
 }
 
 .card h3{
@@ -113,13 +106,34 @@ nav button.active{
   font-weight:600;
 }
 
-footer{
-  text-align:center;
-  padding:40px 20px;
-  color:#777;
+.subnav{
+  display:flex;
+  gap:12px;
+  margin-bottom:30px;
+  flex-wrap:wrap;
 }
 
-/* Modal */
+.subnav button{
+  padding:8px 16px;
+  border-radius:20px;
+  border:1px solid var(--primary);
+  background:white;
+  color:var(--primary);
+  cursor:pointer;
+}
+
+.subnav button.active{
+  background:var(--primary);
+  color:white;
+}
+
+.widget-box{
+  background:white;
+  padding:25px;
+  border-radius:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
 .overlay{
   position:fixed;
   inset:0;
@@ -168,60 +182,58 @@ footer{
 </header>
 
 <nav>
-  <button onclick="openProtected('training')" id="tab-training">Trening i zaliczenie</button>
-  <button onclick="openProtected('results')" id="tab-results">Wyniki</button>
-  <button onclick="openProtected('manage')" id="tab-manage">Zarządzaj</button>
+  <button onclick="openTraining()">Trening i zaliczenie</button>
+  <button onclick="openSection('results')">Wyniki</button>
+  <button onclick="openSection('manage')">Zarządzaj</button>
 </nav>
 
 <!-- TRENING -->
 <section id="training" class="section">
+
   <div class="instructions">
     Najpierw potrenuj (argumenty, obiekcje, pytania), a następnie przejdź do zaliczenia.
-    Możesz wielokrotnie zaliczać zadanie — liczy się najlepszy wynik. Powodzenia!
+    Możesz wielokrotnie zaliczać zadanie — liczy się najlepszy wynik.
   </div>
 
-  <div class="grid">
-
-    <div class="card">
-      <h3>1) Argumenty sprzedażowe – Trener</h3>
-      <elevenlabs-convai agent-id="agent_0101kgyh7amwe5nbdzbndx488r4j"></elevenlabs-convai>
-    </div>
-
-    <div class="card">
-      <h3>2) Obiekcje klientów – Trener</h3>
-      <elevenlabs-convai agent-id="agent_3501khgrb2mceqmb1hw3gn7vsdqk"></elevenlabs-convai>
-    </div>
-
-    <div class="card">
-      <h3>3) Pytania klientów – Trener</h3>
-      <elevenlabs-convai agent-id="agent_0401khhfdqaaftsaye0sfp80nm53"></elevenlabs-convai>
-    </div>
-
-    <div class="card">
-      <h3>4) Zaliczenie</h3>
-      <elevenlabs-convai agent-id="agent_7401khhm6n1nf259zwg20b989jj7"></elevenlabs-convai>
-    </div>
-
+  <div class="subnav">
+    <button onclick="showTrainer('arg')" id="btn-arg">Argumenty sprzedażowe</button>
+    <button onclick="showTrainer('obj')" id="btn-obj">Obiekcje klientów</button>
+    <button onclick="showTrainer('ques')" id="btn-ques">Pytania klientów</button>
+    <button onclick="showTrainer('exam')" id="btn-exam">Zaliczenie</button>
   </div>
+
+  <div id="trainer-arg" class="widget-box" style="display:none;">
+    <h3>Argumenty sprzedażowe – Trener</h3>
+    <elevenlabs-convai agent-id="agent_0101kgyh7amwe5nbdzbndx488r4j"></elevenlabs-convai>
+  </div>
+
+  <div id="trainer-obj" class="widget-box" style="display:none;">
+    <h3>Obiekcje klientów – Trener</h3>
+    <elevenlabs-convai agent-id="agent_3501khgrb2mceqmb1hw3gn7vsdqk"></elevenlabs-convai>
+  </div>
+
+  <div id="trainer-ques" class="widget-box" style="display:none;">
+    <h3>Pytania klientów – Trener</h3>
+    <elevenlabs-convai agent-id="agent_0401khhfdqaaftsaye0sfp80nm53"></elevenlabs-convai>
+  </div>
+
+  <div id="trainer-exam" class="widget-box" style="display:none;">
+    <h3>Zaliczenie</h3>
+    <elevenlabs-convai agent-id="agent_7401khhm6n1nf259zwg20b989jj7"></elevenlabs-convai>
+  </div>
+
 </section>
 
-<!-- WYNIKI -->
 <section id="results" class="section">
   <h2>Wyniki</h2>
   <p>Moduł wyników zostanie dopracowany w kolejnym etapie.</p>
 </section>
 
-<!-- ZARZĄDZAJ -->
 <section id="manage" class="section">
-  <h2>Zarządzanie hasłami</h2>
-  <p>Tu w kolejnej iteracji umożliwimy zmianę haseł.</p>
+  <h2>Zarządzanie</h2>
+  <p>Moduł administracyjny zostanie rozbudowany w kolejnym etapie.</p>
 </section>
 
-<footer>
-© 2026 Panel treningowy
-</footer>
-
-<!-- Modal -->
 <div class="overlay" id="overlay">
   <div class="modal">
     <h3>Podaj hasło</h3>
@@ -233,32 +245,38 @@ footer{
 <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async></script>
 
 <script>
-let currentTarget = null;
+let trainingUnlocked = false;
 
-function openProtected(target){
-  currentTarget = target;
-  document.getElementById('overlay').style.display='flex';
+function openTraining(){
+  if(!trainingUnlocked){
+    document.getElementById('overlay').style.display='flex';
+  } else {
+    openSection('training');
+  }
 }
 
 function checkPassword(){
   const value = document.getElementById('passwordInput').value;
-
-  if(
-    (currentTarget==='training' && value==='PRU2026') ||
-    (currentTarget==='results' && value==='WYNIKI2026') ||
-    (currentTarget==='manage' && value==='Tomek123')
-  ){
+  if(value === 'PRU2026'){
+    trainingUnlocked = true;
     document.getElementById('overlay').style.display='none';
-    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-    document.getElementById(currentTarget).classList.add('active');
-
-    document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
-    document.getElementById('tab-'+currentTarget).classList.add('active');
-
+    openSection('training');
     document.getElementById('passwordInput').value='';
-  }else{
+  } else {
     alert('Nieprawidłowe hasło');
   }
+}
+
+function openSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function showTrainer(type){
+  document.querySelectorAll('[id^="trainer-"]').forEach(e=>e.style.display='none');
+  document.querySelectorAll('.subnav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('trainer-'+type).style.display='block';
+  document.getElementById('btn-'+type).classList.add('active');
 }
 </script>
 

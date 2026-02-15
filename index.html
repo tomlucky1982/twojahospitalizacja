@@ -1,687 +1,266 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Twoja Hospitalizacja — Trening agentów</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Twoja Hospitalizacja – Panel treningowy</title>
 
-  <!-- Minimalistyczny reset -->
-  <style>
-    :root{
-      /* Paleta w stylu PRU (granat + złoto) */
-      --bg: #0b1530;
-      --bg-2: #0f2046;
-      --card: rgba(255,255,255,.06);
-      --card-2: rgba(255,255,255,.085);
-      --text: #e9eefc;
-      --muted: rgba(233,238,252,.72);
-      --line: rgba(233,238,252,.14);
-      --accent: #f2c300;     /* złoto/żółty */
-      --accent-2:#ffd84d;
-      --danger:#ff5a6a;
-      --ok:#34d399;
+<style>
+:root{
+  --primary:#0f6a66;
+  --primary-dark:#0b4f4c;
+  --accent:#1db6ad;
+  --light:#f4f8f8;
+  --text:#0c1e1d;
+  --card:#ffffff;
+  --radius:18px;
+}
 
-      --radius: 18px;
-      --shadow: 0 18px 60px rgba(0,0,0,.35);
-      --shadow-2: 0 10px 30px rgba(0,0,0,.25);
+body{
+  margin:0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--light);
+  color: var(--text);
+}
 
-      --max: 1120px;
-      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-    }
+header{
+  background: linear-gradient(90deg,var(--primary),var(--primary-dark));
+  color:white;
+  padding:40px 20px;
+  position:relative;
+}
 
-    *{ box-sizing:border-box; }
-    body{
-      margin:0;
-      font-family: var(--font);
-      color: var(--text);
-      background:
-        radial-gradient(1200px 600px at 20% -10%, rgba(242,195,0,.22), transparent 55%),
-        radial-gradient(900px 600px at 85% 10%, rgba(255,216,77,.12), transparent 55%),
-        radial-gradient(800px 600px at 50% 100%, rgba(79,140,255,.16), transparent 55%),
-        linear-gradient(180deg, var(--bg), #070d1f 70%);
-      min-height:100vh;
-    }
+header:before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:14px;
+  background:var(--accent);
+}
 
-    a{ color: inherit; text-decoration: none; }
-    button, input{ font-family: inherit; }
+header h1{
+  margin:0;
+  font-size:48px;
+  letter-spacing:1px;
+}
 
-    .container{
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 26px 18px 60px;
-    }
+header p{
+  margin:10px 0 0;
+  font-size:20px;
+  opacity:.9;
+}
 
-    /* Header */
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 16px;
-      padding: 18px 18px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      box-shadow: var(--shadow-2);
-      position: sticky;
-      top: 14px;
-      backdrop-filter: blur(10px);
-      z-index: 20;
-    }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap: 12px;
-      min-width: 240px;
-    }
-    .logo{
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      background: radial-gradient(circle at 30% 30%, var(--accent-2), var(--accent));
-      box-shadow: 0 12px 24px rgba(242,195,0,.28);
-    }
-    .brand h1{
-      margin:0;
-      font-size: 15px;
-      letter-spacing: .2px;
-      font-weight: 800;
-      line-height: 1.2;
-    }
-    .brand .sub{
-      display:block;
-      color: var(--muted);
-      font-weight: 600;
-      font-size: 12px;
-      margin-top: 2px;
-    }
+nav{
+  display:flex;
+  gap:12px;
+  padding:20px;
+  background:white;
+  border-bottom:1px solid #e0e0e0;
+}
 
-    /* Tabs */
-    .tabs{
-      display:flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content:flex-end;
-    }
-    .tab{
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      color: var(--text);
-      padding: 10px 12px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 13px;
-      transition: .15s ease;
-      user-select:none;
-    }
-    .tab:hover{ transform: translateY(-1px); background: rgba(255,255,255,.06); }
-    .tab.active{
-      border-color: rgba(242,195,0,.6);
-      background: rgba(242,195,0,.14);
-      box-shadow: 0 12px 30px rgba(242,195,0,.12);
-    }
-    .tag{
-      margin-left: 8px;
-      font-size: 11px;
-      color: rgba(11,21,48,.95);
-      background: var(--accent);
-      padding: 3px 8px;
-      border-radius: 999px;
-      font-weight: 900;
-      letter-spacing: .2px;
-    }
+nav button{
+  padding:10px 18px;
+  border-radius:30px;
+  border:1px solid var(--primary);
+  background:white;
+  color:var(--primary);
+  cursor:pointer;
+  font-weight:600;
+}
 
-    /* Content */
-    .hero{
-      margin-top: 22px;
-      padding: 22px 22px 18px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      box-shadow: var(--shadow);
-    }
-    .hero h2{
-      margin: 0 0 10px;
-      font-size: 22px;
-      letter-spacing: .2px;
-    }
-    .hero p{
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.55;
-      font-weight: 600;
-    }
+nav button.active{
+  background:var(--primary);
+  color:white;
+}
 
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-      margin-top: 16px;
-    }
-    @media (min-width: 980px){
-      .grid.two{ grid-template-columns: 1fr 1fr; }
-    }
+.section{
+  display:none;
+  padding:40px 20px;
+  max-width:1200px;
+  margin:auto;
+}
 
-    .card{
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border-radius: var(--radius);
-      padding: 16px;
-      box-shadow: var(--shadow-2);
-    }
-    .card h3{
-      margin: 0 0 8px;
-      font-size: 16px;
-      letter-spacing: .2px;
-    }
-    .card .desc{
-      margin: 0 0 14px;
-      color: var(--muted);
-      font-weight: 600;
-      line-height: 1.45;
-      font-size: 13px;
-    }
+.section.active{
+  display:block;
+}
 
-    .hint{
-      display:flex;
-      align-items:flex-start;
-      gap: 10px;
-      border: 1px solid rgba(242,195,0,.35);
-      background: rgba(242,195,0,.10);
-      border-radius: 14px;
-      padding: 12px 12px;
-      color: rgba(255,255,255,.92);
-      margin-top: 12px;
-    }
-    .hint b{ color: var(--accent-2); }
-    .dot{
-      width:10px;height:10px;border-radius:50%;
-      background: var(--accent);
-      margin-top: 5px;
-      box-shadow: 0 0 0 6px rgba(242,195,0,.12);
-      flex: 0 0 auto;
-    }
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:30px;
+}
 
-    .footer{
-      margin-top: 22px;
-      color: rgba(233,238,252,.55);
-      font-size: 12px;
-      text-align:center;
-    }
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:25px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
 
-    /* Password modal */
-    .overlay{
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.55);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding: 18px;
-      z-index: 999;
-    }
-    .overlay.show{ display:flex; }
-    .modal{
-      width: min(520px, 100%);
-      border-radius: 20px;
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(15,32,70,.96), rgba(11,21,48,.96));
-      box-shadow: var(--shadow);
-      padding: 18px;
-    }
-    .modal h4{
-      margin: 0 0 6px;
-      font-size: 16px;
-    }
-    .modal p{
-      margin: 0 0 14px;
-      color: var(--muted);
-      font-weight: 600;
-      line-height: 1.45;
-      font-size: 13px;
-    }
-    .row{
-      display:flex;
-      gap: 10px;
-      align-items:center;
-    }
-    .inp{
-      width: 100%;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(233,238,252,.18);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      outline: none;
-      font-weight: 700;
-    }
-    .inp:focus{
-      border-color: rgba(242,195,0,.55);
-      box-shadow: 0 0 0 6px rgba(242,195,0,.10);
-    }
-    .btn{
-      border: none;
-      padding: 12px 14px;
-      border-radius: 14px;
-      cursor: pointer;
-      font-weight: 900;
-      letter-spacing: .2px;
-      transition: .15s ease;
-      white-space: nowrap;
-    }
-    .btn.primary{
-      background: var(--accent);
-      color: rgba(11,21,48,.95);
-    }
-    .btn.primary:hover{ transform: translateY(-1px); filter: brightness(1.02); }
-    .btn.ghost{
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      border: 1px solid rgba(233,238,252,.16);
-    }
-    .btn.ghost:hover{ transform: translateY(-1px); background: rgba(255,255,255,.09); }
-    .msg{
-      margin-top: 10px;
-      font-size: 12px;
-      font-weight: 800;
-      display:none;
-    }
-    .msg.err{ color: var(--danger); }
-    .msg.ok{ color: var(--ok); }
+.card h3{
+  margin-top:0;
+  color:var(--primary);
+}
 
-    /* Sections */
-    .view{ display:none; }
-    .view.active{ display:block; }
+.instructions{
+  background:#e8f5f4;
+  border-left:6px solid var(--accent);
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:30px;
+  font-weight:600;
+}
 
-    /* Manage form */
-    .formgrid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-    @media (min-width: 780px){
-      .formgrid{ grid-template-columns: 1fr 1fr; }
-    }
-    .field label{
-      display:block;
-      font-size: 12px;
-      font-weight: 900;
-      color: rgba(233,238,252,.78);
-      margin: 0 0 6px;
-    }
-    .field small{
-      display:block;
-      color: rgba(233,238,252,.55);
-      margin-top: 6px;
-      line-height: 1.35;
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(233,238,252,.14);
-      background: rgba(255,255,255,.04);
-      color: rgba(233,238,252,.82);
-      font-size: 12px;
-      font-weight: 800;
-    }
-    .pill code{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-      color: var(--accent-2);
-    }
+footer{
+  text-align:center;
+  padding:40px 20px;
+  color:#777;
+}
 
-    /* Eleven widgets container */
-    .widgetWrap{
-      border: 1px solid rgba(233,238,252,.14);
-      background: rgba(0,0,0,.12);
-      border-radius: 16px;
-      padding: 14px;
-    }
-    .widgetWrap .note{
-      margin: 0 0 10px;
-      color: rgba(233,238,252,.70);
-      font-weight: 700;
-      font-size: 12px;
-      line-height: 1.4;
-    }
-  </style>
+/* Modal */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.5);
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+
+.modal{
+  background:white;
+  padding:30px;
+  border-radius:16px;
+  width:300px;
+  text-align:center;
+}
+
+.modal input{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+.modal button{
+  margin-top:15px;
+  padding:10px 20px;
+  background:var(--primary);
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr;}
+}
+</style>
 </head>
-
 <body>
-  <div class="container">
-    <div class="topbar">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <h1>Twoja Hospitalizacja <span class="sub">Panel treningowy dla agentów</span></h1>
-        </div>
-      </div>
 
-      <div class="tabs" role="tablist" aria-label="Nawigacja">
-        <div class="tab active" data-target="training" role="tab" aria-selected="true">Trening i zaliczenie <span class="tag">HASŁO</span></div>
-        <div class="tab" data-target="results" role="tab" aria-selected="false">Wyniki <span class="tag">HASŁO</span></div>
-        <div class="tab" data-target="manage" role="tab" aria-selected="false">Zarządzaj <span class="tag">ADMIN</span></div>
-      </div>
-    </div>
+<header>
+  <h1>TWOJA HOSPITALIZACJA</h1>
+  <p>Organizacja leczenia szpitalnego w kraju i za granicą</p>
+</header>
 
-    <!-- VIEWS -->
-    <section id="view-training" class="view active" aria-label="Trening i zaliczenie">
-      <div class="hero">
-        <h2>Trening i zaliczenie</h2>
-        <p>
-          Poniżej masz 3 boty do treningu oraz 1 bot do zaliczenia. Wszystkie widzisz na jednej stronie w odpowiednich sekcjach.
-        </p>
+<nav>
+  <button onclick="openProtected('training')" id="tab-training">Trening i zaliczenie</button>
+  <button onclick="openProtected('results')" id="tab-results">Wyniki</button>
+  <button onclick="openProtected('manage')" id="tab-manage">Zarządzaj</button>
+</nav>
 
-        <div class="hint">
-          <div class="dot" aria-hidden="true"></div>
-          <div>
-            <div style="font-weight:900; margin-bottom:4px;">Instrukcja</div>
-            <div style="color:rgba(233,238,252,.80); font-weight:650; line-height:1.5;">
-              Najpierw <b>potrenuj</b> (argumenty, obiekcje, pytania), a następnie przejdź do <b>zaliczenia</b>.
-              Możesz wielokrotnie zaliczać zadanie — liczy się najlepszy wynik. Powodzenia!
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="grid two">
-        <div class="card">
-          <h3>1) Argumenty sprzedażowe</h3>
-          <p class="desc">Ćwicz prowadzenie rozmowy i dobór argumentów pod potrzeby klienta.</p>
-          <div class="widgetWrap">
-            <p class="note">Wskazówka: poproś o 2–3 różne persony klienta i przećwicz dopasowanie argumentów.</p>
-            <elevenlabs-convai agent-id="agent_0101kgyh7amwe5nbdzbndx488r4j"></elevenlabs-convai>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>2) Obiekcje klientów</h3>
-          <p class="desc">Przećwicz najczęstsze obiekcje i odpowiedzi, które domykają rozmowę.</p>
-          <div class="widgetWrap">
-            <p class="note">Wskazówka: ćwicz „parafraza + uzasadnienie + pytanie zamykające”.</p>
-            <elevenlabs-convai agent-id="agent_3501khgrb2mceqmb1hw3gn7vsdqk"></elevenlabs-convai>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>3) Pytania klientów</h3>
-          <p class="desc">Klient pyta o szczegóły — ćwicz klarowne i pewne odpowiedzi.</p>
-          <div class="widgetWrap">
-            <p class="note">Wskazówka: poproś o „trudne pytania”, a potem o „krótką odpowiedź w 20 sekund”.</p>
-            <elevenlabs-convai agent-id="agent_0401khhfdqaaftsaye0sfp80nm53"></elevenlabs-convai>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>4) Zaliczenie</h3>
-          <p class="desc">Sprawdź się. Liczy się najlepszy wynik — możesz powtarzać wielokrotnie.</p>
-          <div class="widgetWrap">
-            <p class="note">Wskazówka: potraktuj to jak prawdziwą rozmowę sprzedażową (pytania, potrzeba, domknięcie).</p>
-            <elevenlabs-convai agent-id="agent_7401khhm6n1nf259zwg20b989jj7"></elevenlabs-convai>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer">
-        © 2026 • Strona treningowa „Twoja Hospitalizacja” • GitHub Pages
-      </div>
-    </section>
-
-    <section id="view-results" class="view" aria-label="Wyniki">
-      <div class="hero">
-        <h2>Wyniki</h2>
-        <p>Ta zakładka jest przygotowana pod przyszły moduł wyników. Dopracujemy ją później.</p>
-      </div>
-
-      <div class="grid">
-        <div class="card">
-          <h3>Plan na kolejną iterację</h3>
-          <p class="desc">
-            Tu możemy dodać np. ranking agentów, historię podejść do zaliczenia, eksport CSV, integrację z arkuszem Google
-            lub webhooki (jeśli ElevenLabs udostępnia wyniki).
-          </p>
-          <div class="pill">Status: <code>do zrobienia</code></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="view-manage" class="view" aria-label="Zarządzaj">
-      <div class="hero">
-        <h2>Zarządzaj</h2>
-        <p>
-          Po podaniu hasła administratora możesz zmieniać hasła do pozostałych zakładek.
-          Zmiany zapisują się lokalnie w tej przeglądarce (localStorage).
-        </p>
-      </div>
-
-      <div class="grid">
-        <div class="card">
-          <h3>Ustawienia haseł</h3>
-          <p class="desc">
-            Możesz zmienić hasła do zakładek „Trening i zaliczenie” oraz „Wyniki”.
-          </p>
-
-          <div class="formgrid">
-            <div class="field">
-              <label for="pwdTraining">Hasło: Trening i zaliczenie</label>
-              <input id="pwdTraining" class="inp" type="text" autocomplete="off" />
-              <small>Domyślnie: <b>PRU2026</b></small>
-            </div>
-
-            <div class="field">
-              <label for="pwdResults">Hasło: Wyniki</label>
-              <input id="pwdResults" class="inp" type="text" autocomplete="off" />
-              <small>Domyślnie: <b>WYNIKI2026</b></small>
-            </div>
-          </div>
-
-          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
-            <button class="btn primary" id="savePwds">Zapisz hasła</button>
-            <button class="btn ghost" id="resetPwds">Przywróć domyślne</button>
-          </div>
-
-          <div id="manageMsg" class="msg ok" style="display:none;"></div>
-
-          <div style="margin-top:14px; border-top:1px solid var(--line); padding-top:14px;">
-            <div class="pill">Hasło admin: <code>Tomek123</code></div>
-          </div>
-        </div>
-      </div>
-    </section>
+<!-- TRENING -->
+<section id="training" class="section">
+  <div class="instructions">
+    Najpierw potrenuj (argumenty, obiekcje, pytania), a następnie przejdź do zaliczenia.
+    Możesz wielokrotnie zaliczać zadanie — liczy się najlepszy wynik. Powodzenia!
   </div>
 
-  <!-- Password Modal -->
-  <div class="overlay" id="overlay" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <h4 id="modalTitle">Wymagane hasło</h4>
-      <p id="modalText">Podaj hasło, aby otworzyć zakładkę.</p>
-      <div class="row">
-        <input id="modalInput" class="inp" type="password" placeholder="Wpisz hasło…" />
-        <button id="modalOk" class="btn primary">Wejdź</button>
-        <button id="modalCancel" class="btn ghost">Anuluj</button>
-      </div>
-      <div id="modalMsg" class="msg err">Nieprawidłowe hasło.</div>
+  <div class="grid">
+
+    <div class="card">
+      <h3>1) Argumenty sprzedażowe – Trener</h3>
+      <elevenlabs-convai agent-id="agent_0101kgyh7amwe5nbdzbndx488r4j"></elevenlabs-convai>
     </div>
+
+    <div class="card">
+      <h3>2) Obiekcje klientów – Trener</h3>
+      <elevenlabs-convai agent-id="agent_3501khgrb2mceqmb1hw3gn7vsdqk"></elevenlabs-convai>
+    </div>
+
+    <div class="card">
+      <h3>3) Pytania klientów – Trener</h3>
+      <elevenlabs-convai agent-id="agent_0401khhfdqaaftsaye0sfp80nm53"></elevenlabs-convai>
+    </div>
+
+    <div class="card">
+      <h3>4) Zaliczenie</h3>
+      <elevenlabs-convai agent-id="agent_7401khhm6n1nf259zwg20b989jj7"></elevenlabs-convai>
+    </div>
+
   </div>
+</section>
 
-  <!-- ElevenLabs widget script: ładowany raz na całą stronę -->
-  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+<!-- WYNIKI -->
+<section id="results" class="section">
+  <h2>Wyniki</h2>
+  <p>Moduł wyników zostanie dopracowany w kolejnym etapie.</p>
+</section>
 
-  <script>
-    // ====== Proste hasła po stronie klienta (nie jest to zabezpieczenie "enterprise") ======
-    // Dla GitHub Pages to typowe: chroni przed przypadkowym wejściem, ale nie przed osobą techniczną.
-    // Jeśli kiedyś chcesz twarde zabezpieczenie: Cloudflare Access / Basic Auth na reverse proxy.
+<!-- ZARZĄDZAJ -->
+<section id="manage" class="section">
+  <h2>Zarządzanie hasłami</h2>
+  <p>Tu w kolejnej iteracji umożliwimy zmianę haseł.</p>
+</section>
 
-    const DEFAULTS = {
-      training: "PRU2026",
-      results: "WYNIKI2026",
-      manage: "Tomek123",
-    };
+<footer>
+© 2026 Panel treningowy
+</footer>
 
-    const STORAGE_KEY = "twojahospitalizacja.passwords.v1";
+<!-- Modal -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <h3>Podaj hasło</h3>
+    <input type="password" id="passwordInput">
+    <button onclick="checkPassword()">Wejdź</button>
+  </div>
+</div>
 
-    function loadPasswords(){
-      try{
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if(!raw) return {...DEFAULTS};
-        const obj = JSON.parse(raw);
-        return {
-          training: (obj.training || DEFAULTS.training),
-          results: (obj.results || DEFAULTS.results),
-          manage: DEFAULTS.manage, // admin hasło trzymamy "na sztywno" w kodzie
-        };
-      }catch(e){
-        return {...DEFAULTS};
-      }
-    }
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async></script>
 
-    function savePasswords(pwds){
-      const toSave = { training: pwds.training, results: pwds.results };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
-    }
+<script>
+let currentTarget = null;
 
-    let PASSWORDS = loadPasswords();
+function openProtected(target){
+  currentTarget = target;
+  document.getElementById('overlay').style.display='flex';
+}
 
-    const tabs = Array.from(document.querySelectorAll(".tab"));
-    const views = {
-      training: document.getElementById("view-training"),
-      results: document.getElementById("view-results"),
-      manage: document.getElementById("view-manage"),
-    };
+function checkPassword(){
+  const value = document.getElementById('passwordInput').value;
 
-    const overlay = document.getElementById("overlay");
-    const modalInput = document.getElementById("modalInput");
-    const modalOk = document.getElementById("modalOk");
-    const modalCancel = document.getElementById("modalCancel");
-    const modalMsg = document.getElementById("modalMsg");
-    const modalText = document.getElementById("modalText");
+  if(
+    (currentTarget==='training' && value==='PRU2026') ||
+    (currentTarget==='results' && value==='WYNIKI2026') ||
+    (currentTarget==='manage' && value==='Tomek123')
+  ){
+    document.getElementById('overlay').style.display='none';
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    document.getElementById(currentTarget).classList.add('active');
 
-    let pendingTarget = "training";
-    let lastActive = "training";
+    document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+    document.getElementById('tab-'+currentTarget).classList.add('active');
 
-    function setActiveTab(target){
-      tabs.forEach(t => {
-        const isActive = t.dataset.target === target;
-        t.classList.toggle("active", isActive);
-        t.setAttribute("aria-selected", isActive ? "true" : "false");
-      });
-      Object.keys(views).forEach(k => views[k].classList.toggle("active", k === target));
-      lastActive = target;
-      window.location.hash = target;
-    }
+    document.getElementById('passwordInput').value='';
+  }else{
+    alert('Nieprawidłowe hasło');
+  }
+}
+</script>
 
-    function openModal(target){
-      pendingTarget = target;
-      modalMsg.style.display = "none";
-      modalInput.value = "";
-      overlay.classList.add("show");
-      overlay.setAttribute("aria-hidden", "false");
-      modalText.textContent = target === "manage"
-        ? "Podaj hasło administratora, aby wejść do zakładki „Zarządzaj”."
-        : "Podaj hasło, aby otworzyć zakładkę.";
-      setTimeout(() => modalInput.focus(), 50);
-    }
-
-    function closeModal(){
-      overlay.classList.remove("show");
-      overlay.setAttribute("aria-hidden", "true");
-    }
-
-    function checkPassword(target, value){
-      if(target === "manage") return value === DEFAULTS.manage;
-      return value === PASSWORDS[target];
-    }
-
-    function handleTabClick(target){
-      // Trening i Wyniki + Zarządzaj mają hasła zawsze
-      openModal(target);
-    }
-
-    tabs.forEach(t => t.addEventListener("click", () => handleTabClick(t.dataset.target)));
-
-    modalCancel.addEventListener("click", () => {
-      closeModal();
-      // wróć do poprzednio aktywnej
-      setActiveTab(lastActive);
-    });
-
-    overlay.addEventListener("click", (e) => {
-      if(e.target === overlay){
-        closeModal();
-        setActiveTab(lastActive);
-      }
-    });
-
-    function tryEnter(){
-      const val = modalInput.value.trim();
-      if(checkPassword(pendingTarget, val)){
-        closeModal();
-        setActiveTab(pendingTarget);
-
-        // jeśli wchodzimy do "manage", uzupełnij pola obecnymi hasłami
-        if(pendingTarget === "manage"){
-          document.getElementById("pwdTraining").value = PASSWORDS.training;
-          document.getElementById("pwdResults").value = PASSWORDS.results;
-        }
-      }else{
-        modalMsg.style.display = "block";
-        modalInput.select();
-      }
-    }
-
-    modalOk.addEventListener("click", tryEnter);
-    modalInput.addEventListener("keydown", (e) => {
-      if(e.key === "Enter") tryEnter();
-      if(e.key === "Escape") { closeModal(); setActiveTab(lastActive); }
-    });
-
-    // Manage actions
-    const manageMsg = document.getElementById("manageMsg");
-    document.getElementById("savePwds").addEventListener("click", () => {
-      const t = document.getElementById("pwdTraining").value.trim();
-      const r = document.getElementById("pwdResults").value.trim();
-
-      if(!t || !r){
-        manageMsg.className = "msg err";
-        manageMsg.style.display = "block";
-        manageMsg.textContent = "Uzupełnij oba hasła.";
-        return;
-      }
-      PASSWORDS.training = t;
-      PASSWORDS.results = r;
-      savePasswords(PASSWORDS);
-
-      manageMsg.className = "msg ok";
-      manageMsg.style.display = "block";
-      manageMsg.textContent = "Zapisano. Hasła obowiązują w tej przeglądarce.";
-      setTimeout(() => manageMsg.style.display = "none", 2800);
-    });
-
-    document.getElementById("resetPwds").addEventListener("click", () => {
-      PASSWORDS = {...DEFAULTS};
-      savePasswords(PASSWORDS);
-      document.getElementById("pwdTraining").value = PASSWORDS.training;
-      document.getElementById("pwdResults").value = PASSWORDS.results;
-
-      manageMsg.className = "msg ok";
-      manageMsg.style.display = "block";
-      manageMsg.textContent = "Przywrócono domyślne hasła.";
-      setTimeout(() => manageMsg.style.display = "none", 2800);
-    });
-
-    // Opcjonalnie: start na hashu
-    (function boot(){
-      const target = (location.hash || "#training").replace("#","").trim();
-      // pokaż stronę startową (bez pytania o hasło) -> a potem i tak użytkownik kliknie zakładkę
-      // Jeśli chcesz, żeby od razu pytało o hasło na wejściu w /#training, odkomentuj openModal(target)
-      if(["training","results","manage"].includes(target)){
-        setActiveTab("training"); // start zawsze na treningu
-      }else{
-        setActiveTab("training");
-      }
-    })();
-  </script>
 </body>
 </html>
